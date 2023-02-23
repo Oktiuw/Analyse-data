@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     {% block script %}{% endblock %}
   </head>
   <body>
@@ -17,22 +18,30 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/data">Données <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+              <a class="nav-link" href="/data">Données</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/">Python</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">PowerBI</a>
+              <a class="nav-link" href="/">PowerBI</a>
             </li>
           </ul>
         </div>
       </nav>
     </header>
     <main>
-      {% block content %}{% endblock %}
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+      {% block content %}{% endblock %}    
     </main>
+    <script>
+      $(document).ready(function () {
+        $('ul.navbar-nav > li').each(function () {
+          if (window.location.href.includes($(this).find('a').attr('href'))) {
+            $(this).addClass('active');
+          }
+        });
+      });
+    </script>
   </body>
 </html>

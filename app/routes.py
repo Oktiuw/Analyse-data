@@ -23,4 +23,4 @@ def data():
     periode = Periode.query.all()
     infosJob = InfosJob.query.all()
     infosLogement = InfosLogement.query.all()
-    return render_template('data.html', territoires=territoires)
+    return render_template('data.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, infosLogement=infosLogement)

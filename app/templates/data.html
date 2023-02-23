@@ -11,49 +11,142 @@
 {% endblock %}
 
 {% block content %}
-<div class="nav flex-column nav-pills" id="dataBD" role="tablist" aria-orientation="vertical">
-    <a class="nav-link active" id="Territoires" data-toggle="tab" href="#territoires" role="tab" aria-controls="v-territoires" aria-selected="true">Home</a>
-    <a class="nav-link" id="Type Territoire" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-  </div>
-  <div class="tab-content" id="dataBDContent">
-    <div class="tab-pane fade show active" id="territoires" role="tabpanel" aria-labelledby="v-pills-home-tab">
-        <h1>Liste des territoires</h1>
-        <table>
-            <tr>
-            <th>Code</th>
-            <th>Libellé</th>
-            <th>Type</th>
-            </tr>
-            {% for territoire in territoires %}
-            <tr>
-                <td>{{ territoire.codeTerritoire }}</td>
-                <td>{{ territoire.libelleTerritoire }}</td>
-                <td>{{ territoire.codeTypeTerritoire }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="nav flex-column nav-pills" id="dataBD" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="Territoires" data-toggle="tab" href="#territoires" role="tab" aria-controls="territoires" aria-selected="true">Territoires</a>
+                <a class="nav-link" id="TypeTerritoire" data-toggle="tab" href="#typeTerritoire" role="tab" aria-controls="typeTerritoire" aria-selected="false">Type de Territoire</a>
+                <a class="nav-link" id="Periode" data-toggle="tab" href="#periode" role="tab" aria-controls="periode" aria-selected="false">Période</a>
+                <a class="nav-link" id="InfosJob" data-toggle="tab" href="#infosJob" role="tab" aria-controls="infosJob" aria-selected="false">Information Job</a>
+                <a class="nav-link" id="InfosLogement" data-toggle="tab" href="#infosLogement" role="tab" aria-controls="infosLogement" aria-selected="false">Information Logement</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="tab-content" id="dataBDContent">
+
+                <div class="tab-pane fade show active" id="territoires" role="tabpanel" aria-labelledby="territoires">
+                    <h1>Liste des territoires</h1>
+                    <table>
+                        <tr>
+                        <th>Code</th>
+                        <th>Libellé</th>
+                        <th>Type</th>
+                        </tr>
+                        {% for territoire in territoires %}
+                        <tr>
+                            <td>{{ territoire.codeTerritoire }}</td>
+                            <td>{{ territoire.libelleTerritoire }}</td>
+                            <td>{{ territoire.codeTypeTerritoire }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+        
+                <div class="tab-pane fade" id="typeTerritoire" role="tabpanel" aria-labelledby="typeTerritoire">
+                    <h1>{{ title }}</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code Type Territoire</th>
+                                <th>Libellé Type Territoire</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for type in typeTerritoire %}
+                                <tr>
+                                    <td>{{ type.codeTypeTerritoire }}</td>
+                                    <td>{{ type.libelleTypeTerritoire }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="periode" role="tabpanel" aria-labelledby="periode">
+                    <h1>Périodes</h1>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Libellé</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for prd in periode %}
+                            <tr>
+                            <td>{{ prd.codePeriode }}</td>
+                            <td>{{ prd.libellePeriode }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="infosJob" role="tabpanel" aria-labelledby="infosJob">
+                    <h1>InfosJob</h1>
+                    <table>
+                        <tr>
+                        <th>Code période</th>
+                        <th>Code territoire</th>
+                        <th>Valeur indicateur</th>
+                        <th>Code type territoire</th>
+                        <th>Population</th>
+                        </tr>
+                        {% for infosjob in infosJob %}
+                        <tr>
+                            <td>{{ infosjob.codePeriode }}</td>
+                            <td>{{ infosjob.codeTerritoire }}</td>
+                            <td>{{ infosjob.valeurIndic }}</td>
+                            <td>{{ infosjob.codeTypeTerritoire }}</td>
+                            <td>{{ infosjob.population }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="infosLogement" role="tabpanel" aria-labelledby="infosLogement">
+                    <h1>Infos Logement</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code Période</th>
+                                <th>Code Territoire</th>
+                                <th>Code Type Territoire</th>
+                                <th>Logements sans voiture</th>
+                                <th>Logements avec 1 voiture</th>
+                                <th>Logements avec 2 voitures</th>
+                                <th>Logements avec 3 voitures</th>
+                                <th>Logements avec places réservées</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for info in infosLogement %}
+                            <tr>
+                                <td>{{ info.codePeriode }}</td>
+                                <td>{{ info.codeTerritoire }}</td>
+                                <td>{{ info.codeTypeTerritoire }}</td>
+                                <td>{{ info.nbLogements0VOIT }}</td>
+                                <td>{{ info.nbLogements1VOIT }}</td>
+                                <td>{{ info.nbLogements2VOIT }}</td>
+                                <td>{{ info.nbLogements3VOIT }}</td>
+                                <td>{{ info.nbLogementsAvecPlacesResa }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-
-    </div>
-
-    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-
-    </div>
-
-    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-
-    </div>
-  </div>
-
-  <script>
-    // Écoute l'événement "click" sur les liens de la barre de navigation qui permet 
-    $('#dataBD a').on('click', function (e) {
-      e.preventDefault()
-      $(this).tab('show')
-    });
-  </script>
+<script>
+// Écoute sur la barre de navigation qui permet le changement de la section a montrer
+$('#dataBD a').on('click', function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+});
+</script>
 {% endblock %}
