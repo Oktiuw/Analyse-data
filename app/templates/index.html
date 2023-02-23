@@ -5,6 +5,10 @@
     Accueil
 {% endblock %}
 
+{% block script %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
 {% block content %}
-    <h1> Bonjour {{ user['username'] }}</h1>
+    
 {% endblock %}
