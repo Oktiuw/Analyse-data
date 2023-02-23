@@ -1,0 +1,14 @@
+
+body::before {
+    content: "";
+    background-image: url(/static/img/cover1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+    background-position: center center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: brightness(40%) grayscale(100%);
+}

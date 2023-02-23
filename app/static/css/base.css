@@ -1,3 +1,8 @@
 body{
     padding-top: 70px;
+    background-color: blue;
+}
+
+.navbar {
+    background-color: #272727;
 }
