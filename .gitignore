@@ -1,0 +1,8 @@
+# .gitignore
+
+# Ignorer le répertoire de l’environnement virtuel
+env_flask/
+# Ignorer le répertoire de Visual Studio Code
+.vscode/
+# Ignorer le cache de Python
+__pycache__
