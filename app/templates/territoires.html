@@ -1,0 +1,20 @@
+<!-- templates/territoire.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Liste des territoires</h1>
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Libellé</th>
+      <th>Type</th>
+    </tr>
+    {% for territoire in territoires %}
+      <tr>
+        <td>{{ territoire.codeTerritoire }}</td>
+        <td>{{ territoire.libelleTerritoire }}</td>
+        <td>{{ territoire.codeTypeTerritoire }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

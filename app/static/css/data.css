@@ -1,0 +1,10 @@
+#dataBD .nav-link.active {
+    background-color: #6c757d;
+    color: #fff;
+  }
+
+#dataBD .nav-link {
+color: #343a40;
+background-color: #f8f9fa;
+}
+  
