@@ -3,10 +3,12 @@ from flask import Flask
 from app.config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_bootstrap import Bootstrap
 
 # Création de l'application
 # __name__ contient le nom de l'application : app
 app = Flask( __name__ )
+bootstrap = Bootstrap(app)
 app.config.from_object(Config)
 
 # Démarrage du moteur de la base de données
