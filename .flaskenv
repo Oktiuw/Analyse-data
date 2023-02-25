@@ -1,4 +1,4 @@
 # .flaskenv
 
-FLASK_APP=monapplication.py
+FLASK_APP=flaskapp.py
 FLASK_DEBUG=1
