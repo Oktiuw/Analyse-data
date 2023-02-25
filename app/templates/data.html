@@ -27,25 +27,29 @@
 
                 <div class="tab-pane fade show active" id="territoires" role="tabpanel" aria-labelledby="territoires">
                     <h1>Liste des territoires</h1>
-                    <table>
-                        <tr>
-                        <th>Code</th>
-                        <th>Libellé</th>
-                        <th>Type</th>
-                        </tr>
-                        {% for territoire in territoires %}
-                        <tr>
-                            <td>{{ territoire.codeTerritoire }}</td>
-                            <td>{{ territoire.libelleTerritoire }}</td>
-                            <td>{{ territoire.codeTypeTerritoire }}</td>
-                        </tr>
-                        {% endfor %}
+                    <table class="table table-striped bord">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Libellé</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for territoire in territoires %}
+                            <tr>
+                                <td>{{ territoire.codeTerritoire }}</td>
+                                <td>{{ territoire.libelleTerritoire }}</td>
+                                <td>{{ territoire.codeTypeTerritoire }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
         
                 <div class="tab-pane fade" id="typeTerritoire" role="tabpanel" aria-labelledby="typeTerritoire">
-                    <h1>{{ title }}</h1>
-                    <table>
+                    <h1>Liste des types de territoire</h1>
+                    <table class="table table-striped bord">
                         <thead>
                             <tr>
                                 <th>Code Type Territoire</th>
@@ -65,7 +69,7 @@
 
                 <div class="tab-pane fade" id="periode" role="tabpanel" aria-labelledby="periode">
                     <h1>Périodes</h1>
-                    <table>
+                    <table class="table table-striped bord">
                         <thead>
                         <tr>
                             <th>Code</th>
@@ -84,30 +88,34 @@
                 </div>
 
                 <div class="tab-pane fade" id="infosJob" role="tabpanel" aria-labelledby="infosJob">
-                    <h1>InfosJob</h1>
-                    <table>
-                        <tr>
-                        <th>Code période</th>
-                        <th>Code territoire</th>
-                        <th>Valeur indicateur</th>
-                        <th>Code type territoire</th>
-                        <th>Population</th>
-                        </tr>
-                        {% for infosjob in infosJob %}
-                        <tr>
-                            <td>{{ infosjob.codePeriode }}</td>
-                            <td>{{ infosjob.codeTerritoire }}</td>
-                            <td>{{ infosjob.valeurIndic }}</td>
-                            <td>{{ infosjob.codeTypeTerritoire }}</td>
-                            <td>{{ infosjob.population }}</td>
-                        </tr>
-                        {% endfor %}
+                    <h1>Informations Job</h1>
+                    <table class="table table-striped bord">
+                        <thead>
+                            <tr>
+                                <th>Code période</th>
+                                <th>Code territoire</th>
+                                <th>Valeur indicateur</th>
+                                <th>Code type territoire</th>
+                                <th>Population</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for infosjob in infosJob %}
+                            <tr>
+                                <td>{{ infosjob.codePeriode }}</td>
+                                <td>{{ infosjob.codeTerritoire }}</td>
+                                <td>{{ infosjob.valeurIndic }}</td>
+                                <td>{{ infosjob.codeTypeTerritoire }}</td>
+                                <td>{{ infosjob.population }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
 
                 <div class="tab-pane fade" id="infosLogement" role="tabpanel" aria-labelledby="infosLogement">
-                    <h1>Infos Logement</h1>
-                    <table>
+                    <h1>Informations Logement</h1>
+                    <table class="table table-striped bord">
                         <thead>
                             <tr>
                                 <th>Code Période</th>
@@ -143,10 +151,10 @@
 </div>
 
 <script>
-// Écoute sur la barre de navigation qui permet le changement de la section a montrer
-$('#dataBD a').on('click', function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-});
+    // Écoute sur la barre de navigation qui permet le changement de la section a montrer
+    $('#dataBD a').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
 </script>
 {% endblock %}
