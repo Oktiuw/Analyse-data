@@ -11,7 +11,6 @@ itsdangerous==2.1.2
 Jinja2==3.1.2
 Mako==1.2.4
 MarkupSafe==2.1.2
-pkg_resources==0.0.0
 PyMySQL==1.0.2
 python-dotenv==0.21.1
 SQLAlchemy==2.0.4

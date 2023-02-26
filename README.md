@@ -1,8 +1,6 @@
 
 ## Exécuter l’application
 
-
-
 Pour lancer l’application :  
 ```shell
 ~/Flask $ source env_flask/bin/activate
@@ -10,3 +8,7 @@ Pour lancer l’application :
 (env_flask) ~/Flask $ flask run
 ```
 
+## Mettre à jour l'application Web :
+```shell
+~/ $ service apache2 reload
+```
