@@ -7,3 +7,6 @@ env/
 .vscode/
 # Ignorer le cache de Python
 __pycache__
+
+# Ignorer le fichier de l'app pour le mode production
+app/app.py
