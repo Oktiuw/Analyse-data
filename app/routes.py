@@ -1,7 +1,7 @@
 # app/routes.py
 from flask import render_template
 from app import app, bootstrap
-from app.models import Territoire, TypeTerritoire, Periode, InfosJob, InfosLogement
+from app.models import Territoire, TypeTerritoire, Periode, InfosJob
 
 @app.route('/')
 @app.route('/index')
@@ -21,8 +21,7 @@ def data():
     typeTerritoire = TypeTerritoire.query.all()
     periode = Periode.query.all()
     infosJob = InfosJob.query.all()
-    infosLogement = InfosLogement.query.all()
-    return render_template('data.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, infosLogement=infosLogement, bootstrap=bootstrap)
+    return render_template('data.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, bootstrap=bootstrap)
 
 @app.route('/python')
 def python():
@@ -30,8 +29,7 @@ def python():
     typeTerritoire = TypeTerritoire.query.all()
     periode = Periode.query.all()
     infosJob = InfosJob.query.all()
-    infosLogement = InfosLogement.query.all()
-    return render_template('python/python.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, infosLogement=infosLogement, bootstrap=bootstrap)
+    return render_template('python/python.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, bootstrap=bootstrap)
 
 @app.route('/powerBI')
 def powerBI():
@@ -39,5 +37,4 @@ def powerBI():
     typeTerritoire = TypeTerritoire.query.all()
     periode = Periode.query.all()
     infosJob = InfosJob.query.all()
-    infosLogement = InfosLogement.query.all()
-    return render_template('powerBI/powerBI.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, infosLogement=infosLogement, bootstrap=bootstrap)
+    return render_template('powerBI/powerBI.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, bootstrap=bootstrap)

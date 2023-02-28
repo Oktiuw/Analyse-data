@@ -19,7 +19,6 @@
                 <a class="nav-link" id="TypeTerritoire" data-toggle="tab" href="#typeTerritoire" role="tab" aria-controls="typeTerritoire" aria-selected="false">Type de Territoire</a>
                 <a class="nav-link" id="Periode" data-toggle="tab" href="#periode" role="tab" aria-controls="periode" aria-selected="false">Période</a>
                 <a class="nav-link" id="InfosJob" data-toggle="tab" href="#infosJob" role="tab" aria-controls="infosJob" aria-selected="false">Information Job</a>
-                <a class="nav-link" id="InfosLogement" data-toggle="tab" href="#infosLogement" role="tab" aria-controls="infosLogement" aria-selected="false">Information Logement</a>
             </div>
         </div>
         <div class="col-md-9">
@@ -97,6 +96,11 @@
                                 <th>Valeur indicateur</th>
                                 <th>Code type territoire</th>
                                 <th>Population</th>
+                                <th>Logements sans voiture</th>
+                                <th>Logements avec 1 voiture</th>
+                                <th>Logements avec 2 voitures</th>
+                                <th>Logements avec 3 voitures</th>
+                                <th>Logements avec places réservées</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,38 +111,11 @@
                                 <td>{{ infosjob.valeurIndic }}</td>
                                 <td>{{ infosjob.codeTypeTerritoire }}</td>
                                 <td>{{ infosjob.population }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="infosLogement" role="tabpanel" aria-labelledby="infosLogement">
-                    <h1>Informations Logement</h1>
-                    <table class="table table-striped bord">
-                        <thead>
-                            <tr>
-                                <th>Code Période</th>
-                                <th>Code Territoire</th>
-                                <th>Code Type Territoire</th>
-                                <th>Logements sans voiture</th>
-                                <th>Logements avec 1 voiture</th>
-                                <th>Logements avec 2 voitures</th>
-                                <th>Logements avec 3 voitures</th>
-                                <th>Logements avec places réservées</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for info in infosLogement %}
-                            <tr>
-                                <td>{{ info.codePeriode }}</td>
-                                <td>{{ info.codeTerritoire }}</td>
-                                <td>{{ info.codeTypeTerritoire }}</td>
-                                <td>{{ info.nbLogements0VOIT }}</td>
-                                <td>{{ info.nbLogements1VOIT }}</td>
-                                <td>{{ info.nbLogements2VOIT }}</td>
-                                <td>{{ info.nbLogements3VOIT }}</td>
-                                <td>{{ info.nbLogementsAvecPlacesResa }}</td>
+                                <td>{{ infosjob.nbLogements0VOIT }}</td>
+                                <td>{{ infosjob.nbLogements1VOIT }}</td>
+                                <td>{{ infosjob.nbLogements2VOIT }}</td>
+                                <td>{{ infosjob.nbLogements3VOITOuPlus }}</td>
+                                <td>{{ infosjob.nbLogementsAvecPlacesResa }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
