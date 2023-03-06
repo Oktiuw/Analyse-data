@@ -2,6 +2,7 @@
 from flask import render_template
 from app import app, bootstrap
 from app.models import Territoire, TypeTerritoire, Periode, InfosJob
+import plotly.express as px
 
 @app.route('/')
 @app.route('/index')
@@ -29,7 +30,15 @@ def python():
     typeTerritoire = TypeTerritoire.query.all()
     periode = Periode.query.all()
     informations = InfosJob.query.all()
-    return render_template('python/python.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, informations=informations, bootstrap=bootstrap)
+    return render_template('python/.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, informations=informations, bootstrap=bootstrap)
+
+@app.route('/python/test')
+def pythontest():
+    informations = InfosJob.query.all()
+    fig = px.box(informations, x=informations.codeTerritoire, y=informations.population)
+    return render_template('python/python.html', informations=informations, graph=fig, bootstrap=bootstrap)
+
+
 
 @app.route('/powerBI')
 def powerBI():

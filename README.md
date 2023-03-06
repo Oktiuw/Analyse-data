@@ -18,7 +18,7 @@ FLASK_DEBUG=1
 
 4. Installer les requirements : 
 ```shell
-(env_flask) ~/Flask $ pip install –r requirements.txt
+(env_flask) ~/Flask $ pip install -r requirements.txt
 ```
 
 5. Pour lancer le server Web de dev Flask :
