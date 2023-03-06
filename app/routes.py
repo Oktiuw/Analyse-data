@@ -20,21 +20,21 @@ def data():
     territoires = Territoire.query.all()
     typeTerritoire = TypeTerritoire.query.all()
     periode = Periode.query.all()
-    infosJob = InfosJob.query.all()
-    return render_template('data.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, bootstrap=bootstrap)
+    informations = InfosJob.query.all()
+    return render_template('data.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, informations=informations, bootstrap=bootstrap)
 
 @app.route('/python')
 def python():
     territoires = Territoire.query.all()
     typeTerritoire = TypeTerritoire.query.all()
     periode = Periode.query.all()
-    infosJob = InfosJob.query.all()
-    return render_template('python/python.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, bootstrap=bootstrap)
+    informations = InfosJob.query.all()
+    return render_template('python/python.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, informations=informations, bootstrap=bootstrap)
 
 @app.route('/powerBI')
 def powerBI():
     territoires = Territoire.query.all()
     typeTerritoire = TypeTerritoire.query.all()
     periode = Periode.query.all()
-    infosJob = InfosJob.query.all()
-    return render_template('powerBI/powerBI.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, infosJob=infosJob, bootstrap=bootstrap)
+    informations = InfosJob.query.all()
+    return render_template('powerBI/powerBI.html', territoires=territoires, typeTerritoire=typeTerritoire, periode=periode, Informations=informations, bootstrap=bootstrap)

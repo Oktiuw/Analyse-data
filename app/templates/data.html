@@ -101,21 +101,29 @@
                                 <th>Logements avec 2 voitures</th>
                                 <th>Logements avec 3 voitures</th>
                                 <th>Logements avec places réservées</th>
+                                <th>Logements avec chauffage collectif</th>
+                                <th>Logements avec chauffage individuel </th>
+                                <th>Logements avec chauffage électrique</th>
+                                <th>Logements avec chauffage autre</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for infosjob in infosJob %}
+                            {% for infos in informations %}
                             <tr>
-                                <td>{{ infosjob.codePeriode }}</td>
-                                <td>{{ infosjob.codeTerritoire }}</td>
-                                <td>{{ infosjob.valeurIndic }}</td>
-                                <td>{{ infosjob.codeTypeTerritoire }}</td>
-                                <td>{{ infosjob.population }}</td>
-                                <td>{{ infosjob.nbLogements0VOIT }}</td>
-                                <td>{{ infosjob.nbLogements1VOIT }}</td>
-                                <td>{{ infosjob.nbLogements2VOIT }}</td>
-                                <td>{{ infosjob.nbLogements3VOITOuPlus }}</td>
-                                <td>{{ infosjob.nbLogementsAvecPlacesResa }}</td>
+                                <td>{{ infos.codePeriode }}</td>
+                                <td>{{ infos.codeTerritoire }}</td>
+                                <td>{{ infos.valeurIndic }}</td>
+                                <td>{{ infos.codeTypeTerritoire }}</td>
+                                <td>{{ infos.population }}</td>
+                                <td>{{ infos.nbLogements0VOIT }}</td>
+                                <td>{{ infos.nbLogements1VOIT }}</td>
+                                <td>{{ infos.nbLogements2VOIT }}</td>
+                                <td>{{ infos.nbLogements3VOITOuPlus }}</td>
+                                <td>{{ infos.nbLogementsAvecPlacesResa }}</td>
+                                <td>{{ infos.chauffageCollectif }}</td>
+                                <td>{{ infos.chauffageIndiv }}</td>
+                                <td>{{ infos.chauffageElect }}</td>
+                                <td>{{ infos.chauffageAutre }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

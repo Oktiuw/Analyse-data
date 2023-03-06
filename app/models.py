@@ -20,7 +20,7 @@ class Periode(db.Model):
     codePeriode = db.Column(db.String(200), primary_key=True)
     libellePeriode = db.Column(db.String(200))
 
-# Information Job + Logement
+# Information Job + Logement + CHauffage
 class InfosJob(db.Model):
     __tablename__ = 'InfosJob'
     codePeriode = db.Column(db.String(200), db.ForeignKey('Periode.codePeriode'), primary_key=True)
@@ -33,3 +33,8 @@ class InfosJob(db.Model):
     nbLogements2VOIT = db.Column(db.Integer)
     nbLogements3VOITOuPlus = db.Column(db.Integer)
     nbLogementsAvecPlacesResa = db.Column(db.Integer)
+    chauffageCollectif = db.Column(db.Integer)
+    chauffageIndiv = db.Column(db.Integer)
+    chauffageElect = db.Column(db.Integer)
+    chauffageAutre = db.Column(db.Integer)
+
