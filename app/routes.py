@@ -3,6 +3,7 @@ from flask import render_template
 from app import app, bootstrap
 from app.models import Territoire, TypeTerritoire, Periode, InfosJob
 import plotly.express as px
+import pandas as pd
 
 @app.route('/')
 @app.route('/index')
@@ -35,8 +36,11 @@ def python():
 @app.route('/python/test')
 def pythontest():
     informations = InfosJob.query.all()
-    fig = px.box(informations, x=informations.codeTerritoire, y=informations.population)
-    return render_template('python/python.html', informations=informations, graph=fig, bootstrap=bootstrap)
+    df = pd.DataFrame.from_records([i.__dict__ for i in informations])
+    print(df.head())
+    fig = px.box(df, x='codeTerritoire', y='population')
+    graph_html = fig.to_html(full_html=False)
+    return render_template('python/pythontest.html', informations=informations, graph=graph_html, bootstrap=bootstrap)
 
 
 
