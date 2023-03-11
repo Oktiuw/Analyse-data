@@ -1,0 +1,52 @@
+<!-- app/templates/python/graphtest.html -->
+{% extends "base.html" %}
+
+{% block title %}
+    Tableau de bord {{ territoire.libelleTerritoire }}
+{% endblock %}
+
+{% block content %}
+  <h1>Graphique {{ territoire.libelleTerritoire }} </h1>
+
+
+  <div id="plot">{{ graph_valeurIndic|safe }}</div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Période</th>
+        <th>Valeur indicateur</th>
+        <th>Population</th>
+        <th>Logements sans voiture</th>
+        <th>Logements avec 1 voiture</th>
+        <th>Logements avec 2 voitures</th>
+        <th>Logements avec 3 voitures ou plus</th>
+        <th>Logements avec places de parking réservées</th>
+        <th>Chauffage collectif</th>
+        <th>Chauffage individuel</th>
+        <th>Chauffage électrique</th>
+        <th>Autre chauffage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for info in informations %}
+        <tr>
+          <td>{{ info.codePeriode }}</td>
+          <td>{{ info.valeurIndic }}</td>
+          <td>{{ info.population }}</td>
+          <td>{{ info.nbLogements0VOIT }}</td>
+          <td>{{ info.nbLogements1VOIT }}</td>
+          <td>{{ info.nbLogements2VOIT }}</td>
+          <td>{{ info.nbLogements3VOITOuPlus }}</td>
+          <td>{{ info.nbLogementsAvecPlacesResa }}</td>
+          <td>{{ info.chauffageCollectif }}</td>
+          <td>{{ info.chauffageIndiv }}</td>
+          <td>{{ info.chauffageElect }}</td>
+          <td>{{ info.chauffageAutre }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+ 
+{% endblock %}
