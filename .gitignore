@@ -2,6 +2,7 @@
 
 # Ignorer le répertoire de l’environnement virtuel
 env/
+env_flask/
 .env
 # Ignorer le répertoire de Visual Studio Code
 .vscode/
