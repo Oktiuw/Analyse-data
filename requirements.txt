@@ -8,6 +8,9 @@ Flask-Bootstrap==3.3.7.1
 Flask-Migrate==4.0.4
 Flask-SQLAlchemy==3.0.3
 fonttools==4.38.0
+folium==0.13.0
+geopandas==0.10.2
+geopy==2.2.0
 greenlet==2.0.2
 importlib-metadata==6.0.0
 importlib-resources==5.12.0
