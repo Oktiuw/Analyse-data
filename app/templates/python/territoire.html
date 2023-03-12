@@ -7,8 +7,8 @@
 
 {% block content %}
   <h1>Graphique {{ territoire.libelleTerritoire }} </h1>
-
-
+  <div id="map">{{ map_html|safe }}</div>
+  
   <div id="plot">{{ graph_valeurIndic|safe }}</div>
 
   <table class="table">
