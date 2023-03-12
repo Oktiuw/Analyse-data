@@ -7,6 +7,7 @@ class Territoire(db.Model):
     codeTerritoire = db.Column(db.String(3), primary_key=True)
     libelleTerritoire = db.Column(db.String(100))
     codeTypeTerritoire = db.Column(db.String(20), db.ForeignKey('TypeTerritoire.codeTypeTerritoire'), primary_key=True)
+    geojson = db.Column(db.Text)
 
 # Type de Territoire
 class TypeTerritoire(db.Model):
