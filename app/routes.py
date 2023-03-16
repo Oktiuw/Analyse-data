@@ -30,38 +30,28 @@ def data():
 def python():
     territoires = Territoire.query.filter_by(codeTypeTerritoire='DEP').all()
     
+    geoms = []
+    for t in territoires:
+        if t.geojson:
+            geoms.append(json.loads(t.geojson))
+    gdf = gpd.GeoDataFrame.from_features(geoms)
+
     m = folium.Map(location=[46.2276, 2.2137], zoom_start=5)
 
-    for territoire in territoires:
-        if territoire.geojson :
-            territoire.geojson = ast.literal_eval(territoire.geojson)
-            territoire.geojson = territoire.geojson[0]
-            territoire.geojson  = [(c[0], c[1]) for c in territoire.geojson]
-            territoire.geojson.pop()
-            
-            coordonnees = territoire.geojson
-            polygon = Polygon(coordonnees)
-
-            folium.GeoJson(
-                data={
-                    "type": "Feature",
-                    "geometry": polygon.__geo_interface__,
-                    "properties": {
-                        "name": territoire.libelleTerritoire
-                        }
-                },
-                name="Contour du territoire",
-                style_function=lambda x: {
-                    'fillColor': '#318CE7',
-                    'color': '#318CE7',
-                    'weight': 2,
-                    'fillOpacity': 0.2
-                }
-            ).add_child(folium.Popup(f'Voir le tableau de bord : <a href="/python/{territoire.libelleTerritoire}" target="_blank">{territoire.libelleTerritoire}</a>')).add_to(m)
-
-    map_html = m._repr_html_()
+    for _, row in gdf.iterrows():
+        name = row.loc['nom']
+        if row.geometry.geom_type == 'Polygon':
+            folium.GeoJson(row.geometry, tooltip=name
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{name}" target="_top">Voir le tableau de bord</a> </div>')
+            ).add_to(m)
+        elif row.geometry.geom_type == 'MultiPolygon':
+            folium.GeoJson(row.geometry, tooltip=name
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{name}" target="_top">Voir le tableau de bord </a> </div>')
+            ).add_to(m)
     
-    return render_template('python/python.html', map_html=map_html, bootstrap=bootstrap)
+    map_departement_html = m._repr_html_()
+    
+    return render_template('python/python.html', map_html=map_departement_html, bootstrap=bootstrap)
 
 @app.route('/python/test')
 def pythontest():
@@ -78,25 +68,18 @@ def territoire(libelleTerritoire: str) -> str:
     df = pd.DataFrame.from_records([i.__dict__ for i in informations])
     df['codePeriode'] = df['codePeriode'].astype(int)
 
-    # Affichage de l'emplacement du territoire
-    if territoire.geojson :
-        territoire.geojson = ast.literal_eval(territoire.geojson)
-        territoire.geojson = territoire.geojson[0]
-        territoire.geojson  = [(c[0], c[1]) for c in territoire.geojson]
-        territoire.geojson.pop()
+    # Visuel du territoire
+    if territoire.geojson:
+        geoms = [json.loads(territoire.geojson)]
+        gdf = gpd.GeoDataFrame.from_features(geoms)
 
-        coordonnees = territoire.geojson
-        polygon = Polygon(coordonnees)
-    
-        m = folium.Map(location=[46.2276, 2.2137], zoom_start=5)
+        centroid = gdf.centroid.iloc[0]
+        m = folium.Map(location=[centroid.y, centroid.x], zoom_start=6)        
         
-        folium.GeoJson(
-            data={
-                "type": "Feature",
-                "geometry": polygon.__geo_interface__
-            },
-            name="Contour du territoire"
-        ).add_to(m)
+        if gdf.geometry.type[0] == 'Polygon':
+            folium.GeoJson(gdf.geometry[0]).add_to(m)
+        elif gdf.geometry.type[0] == 'MultiPolygon':
+            folium.GeoJson(gdf.geometry[0]).add_to(m)
 
         map_html = m._repr_html_()
 

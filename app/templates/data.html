@@ -32,6 +32,7 @@
                                 <th>Code</th>
                                 <th>Libellé</th>
                                 <th>Type</th>
+                                <th>Geo</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,6 +41,7 @@
                                 <td>{{ territoire.codeTerritoire }}</td>
                                 <td>{{ territoire.libelleTerritoire }}</td>
                                 <td>{{ territoire.codeTypeTerritoire }}</td>
+                                <td>{{ territoire.geojson }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
