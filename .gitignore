@@ -11,3 +11,5 @@ __pycache__
 
 # Ignorer le fichier de l'app pour le mode production
 app/app.py
+
+.idea/
