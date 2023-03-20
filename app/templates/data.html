@@ -11,6 +11,41 @@
 {% endblock %}
 
 {% block content %}
+<h1>Collecte des données</h1>
+<div class="container-fluid">
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item"><a href="https://pole-emploi.io/" target="_blank">API Pole Emploi</a></li>
+            <li class="list-group-item"><a href="https://api.insee.fr/catalogue/" target="_blank">API Insee</a></li>
+        </ul>
+    </div>
+        <h2 style="margin: 15px;">Explications sur la collecte, automatisation et stockage des données</h2>
+        <ul class="list-inline">
+            <li class="list-group-item">
+                <a data-toggle="collapse" href="#collecte" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Collecte
+                </a></li>
+            <li class="list-group-item collapse" id="collecte">
+                <p>Pour collecter les données, nous nous servons de PHP</p>
+                <p>Avec des classes écrites par nos soins, nous requêtons les APIs puis à l'aide des réponses, nous pré-traitons les données avant de les insérer dans la base.</p>
+            </li>
+            <li class="list-group-item"><a data-toggle="collapse" href="#automatisation" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Automatisation
+            </a></li>
+            <li class="list-group-item collapse" id="automatisation">
+                <p>Une fois la collecte des données effective, nous avons mis en place un script composer qui lance une batterie de tests vérifiant tout d'abord que les APIs sont bien opérationnelles.</p>
+                <p>Le cas échéant, la base est détruite puis reconstruite à l'aide d'un script SQL. Ensuite, la phase de collecte est lancée et l'insertion des données commencent.</p>
+            </li>
+            <li class="list-group-item"><a data-toggle="collapse" href="#stockage" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Stockage
+            </a></li>
+            <li class="list-group-item collapse" id="stockage">
+                <p>Les données sont stockées sur une machine virtuelle : <a href="http://10.31.5.227/phpmyadmin/" target="_blank">10.31.11.229</a>.<br> Si vous souhaitez un compte phpmyadmin pour visualiser les données, envoyez un mail à <a href="mailto:aurelien.vincent@etudiant.univ-reims.fr">aurelien.vincent@etudiant.univ-reims.fr</a> </p>
+                <p>Sinon, vous pouvez voir les données <a href="#territoires">ici</a>.</p>
+            </li>
+        </ul>
+</div>
+<br><br>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
