@@ -28,6 +28,7 @@ def data():
 
 @app.route('/python')
 def python():
+    # Carte pour les Départements
     territoires = Territoire.query.filter_by(codeTypeTerritoire='DEP').all()
     
     geoms = []
@@ -48,10 +49,35 @@ def python():
             folium.GeoJson(row.geometry, tooltip=name
             ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{name}" target="_top">Voir le tableau de bord </a> </div>')
             ).add_to(m)
-    
+
     map_departement_html = m._repr_html_()
+
+    # Carte pour les Régions
+    territoires = Territoire.query.filter_by(codeTypeTerritoire='REG').all()
     
-    return render_template('python/python.html', map_html=map_departement_html, bootstrap=bootstrap)
+    geoms = []
+    for t in territoires:
+        if t.geojson:
+            geoms.append(json.loads(t.geojson))
+    gdf = gpd.GeoDataFrame.from_features(geoms)
+
+    m = folium.Map(location=[46.2276, 2.2137], zoom_start=5)
+
+    for _, row in gdf.iterrows():
+        name = row.loc['nom']
+        if row.geometry.geom_type == 'Polygon':
+            folium.GeoJson(row.geometry, tooltip=name
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{name}" target="_top">Voir le tableau de bord</a> </div>')
+            ).add_to(m)
+        elif row.geometry.geom_type == 'MultiPolygon':
+            folium.GeoJson(row.geometry, tooltip=name
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{name}" target="_top">Voir le tableau de bord </a> </div>')
+            ).add_to(m)
+
+    map_region_html = m._repr_html_()
+
+    
+    return render_template('python/python.html', map_region_html=map_region_html, map_departement_html=map_departement_html, bootstrap=bootstrap)
 
 @app.route('/python/<libelleTerritoire>')
 def territoire(libelleTerritoire: str) -> str:
