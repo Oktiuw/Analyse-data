@@ -10,10 +10,18 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Graphique {{ territoire.libelleTerritoire }} </h1>
-  <div id="map" class="map">{{ map_html|safe }}</div>
-  
-  <div id="plot">{{ graph_valeurIndic|safe }}</div>
+  <h1>Tableau de bord {{ territoire.libelleTerritoire }} </h1>
+
+  <div class="row">
+    <div id="map" class="col-4">{{ map_html|safe }}</div>
+
+    <div id="plot" class="col-8">{{ graph_valeurIndic|safe }}</div>
+  </div>
+
+
+  {% for graph in graphs %}
+    <div id="plot">{{ graph|safe }}</div>
+  {% endfor %}
 
   <table class="table">
     <thead>

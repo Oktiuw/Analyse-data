@@ -97,20 +97,37 @@ def territoire(codeTypeTerritoire: str, libelleTerritoire: str) -> str:
             folium.GeoJson(gdf.geometry[0]).add_to(m)
         map_html = m._repr_html_()
 
-
-    #Création Graph
-    fig = px.line(df, x='codePeriode', y='valeurIndic')
-    # Configuration Graph
-    fig.update_traces(legendgroup="", showlegend=True)
-    fig.update_layout(title="Valeur Indicateur - Dynamisme",
+    #Création Graph Valeur Indicateur Dynamisme
+    fig = px.line(df[df['codePeriode'].str.len() != 4], x='codePeriode', y='valeurIndic')
+    fig.update_layout(title=f"Valeur Indicateur - Dynamisme par trimestre",
                     legend=dict( yanchor="top", y=0.99, xanchor="left", x=0.01),
                     xaxis_title="Période",
                     yaxis_title="Valeur Indic",
                     yaxis=dict(range=[0, 5.2]))
-
     graph_valeurIndic = fig.to_html(full_html=False)
 
-    return render_template('python/territoire.html',map_html=map_html,territoire=territoire, informations=informations, graph_valeurIndic=graph_valeurIndic, bootstrap=bootstrap)
+    #Création des Graph
+    graphs = []
+    for annee in ['2016', '2017', '2018', '2019']:
+        df_base = df.loc[(df['codePeriode'].str.len() == 4) & (df['codePeriode'] == annee)]
+        #concernant le nombre de voitures
+        lst_voiture = df_base[['nbLogements0VOIT', 'nbLogements1VOIT', 'nbLogements2VOIT'  ,'nbLogements3VOITOuPlus']].iloc[0].to_list()
+        df_voitures = pd.DataFrame({'Logement': ['sans voiture', 'avec 1 voiture', 'avec 2 voitures', 'avec 3 voitures ou plus'], annee : lst_voiture})
+        fig = px.pie(df_voitures, values=annee, names='Logement', title=f"Proportion de voitures par logement - Année {annee}")
+        graphs.append(fig.to_html(full_html=True))
+        #concernant les places de parking
+        lst_place = df_base[['nbLogementsAvecPlacesResa']].iloc[0].to_list()[0]
+        df_places = pd.DataFrame({'Logement': ['avec places réservées', 'sans places réservées'], annee : [lst_place, sum(lst_voiture)-lst_place]})
+        fig = px.pie(df_places, values=annee, names='Logement', title=f"Proportion de place de parking reservées - Année {annee}")
+        graphs.append(fig.to_html(full_html=True))
+        #concernant le chauffage
+        lst_chauffage = df_base[['chauffageCollectif', 'chauffageIndiv', 'chauffageElect', 'chauffageAutre']].iloc[0].to_list()
+        df_chauffage = pd.DataFrame({'Logement': ['avec chauffage collectif','avec chauffage individuel', 'avec chauffage electrique', 'avec autre chauffage',], annee : lst_chauffage})
+        fig = px.pie(df_chauffage, values=annee, names='Logement', title=f"Proportion des différents type de chauffage - Année {annee}")
+        graphs.append(fig.to_html(full_html=True))
+    
+
+    return render_template('python/territoire.html',map_html=map_html,territoire=territoire, informations=informations, graphs=graphs, graph_valeurIndic=graph_valeurIndic, bootstrap=bootstrap)
 
 @app.route('/powerBI')
 def powerBI():
