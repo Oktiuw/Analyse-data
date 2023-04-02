@@ -53,46 +53,34 @@ def python():
     
     return render_template('python/python.html', map_html=map_departement_html, bootstrap=bootstrap)
 
-@app.route('/python/test')
-def pythontest():
-    informations = InfosJob.query.all()
-    df = pd.DataFrame.from_records([i.__dict__ for i in informations])
-    fig = px.box(df, x='codeTerritoire', y='population')
-    graph_html = fig.to_html(full_html=False)
-    return render_template('python/graphtest.html', informations=informations, graph_html=graph_html, bootstrap=bootstrap)
-
 @app.route('/python/<libelleTerritoire>')
 def territoire(libelleTerritoire: str) -> str:
     territoire = Territoire.query.filter_by(libelleTerritoire=libelleTerritoire).first()
-    informations = InfosJob.query.filter_by(codeTerritoire=territoire.codeTerritoire, codeTypeTerritoire=territoire.codeTypeTerritoire).filter(func.length(InfosJob.codePeriode) == 4).all()    
+    informations = InfosJob.query.filter_by(codeTerritoire=territoire.codeTerritoire, codeTypeTerritoire=territoire.codeTypeTerritoire).all()    
     df = pd.DataFrame.from_records([i.__dict__ for i in informations])
-    df['codePeriode'] = df['codePeriode'].astype(int)
 
     # Visuel du territoire
     if territoire.geojson:
         geoms = [json.loads(territoire.geojson)]
         gdf = gpd.GeoDataFrame.from_features(geoms)
-
         centroid = gdf.centroid.iloc[0]
         m = folium.Map(location=[centroid.y, centroid.x], zoom_start=6)        
-        
         if gdf.geometry.type[0] == 'Polygon':
             folium.GeoJson(gdf.geometry[0]).add_to(m)
         elif gdf.geometry.type[0] == 'MultiPolygon':
             folium.GeoJson(gdf.geometry[0]).add_to(m)
-
         map_html = m._repr_html_()
 
 
     #Création Graph
-    fig = px.bar(df.query('codePeriode >= 2018'), x='codePeriode', y='valeurIndic')
+    fig = px.line(df, x='codePeriode', y='valeurIndic')
     # Configuration Graph
     fig.update_traces(legendgroup="", showlegend=True)
     fig.update_layout(title="Valeur Indicateur - Dynamisme",
                     legend=dict( yanchor="top", y=0.99, xanchor="left", x=0.01),
                     xaxis_title="Période",
                     yaxis_title="Valeur Indic",
-                    yaxis=dict(range=[0, 5]))
+                    yaxis=dict(range=[0, 5.2]))
 
     graph_valeurIndic = fig.to_html(full_html=False)
 
