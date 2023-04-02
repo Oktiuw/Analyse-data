@@ -43,11 +43,11 @@ def python():
         name = row.loc['nom']
         if row.geometry.geom_type == 'Polygon':
             folium.GeoJson(row.geometry, tooltip=name
-            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{name}" target="_top">Voir le tableau de bord</a> </div>')
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/DEP/{name}" target="_top">Voir le tableau de bord</a> </div>')
             ).add_to(m)
         elif row.geometry.geom_type == 'MultiPolygon':
             folium.GeoJson(row.geometry, tooltip=name
-            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{name}" target="_top">Voir le tableau de bord </a> </div>')
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/DEP/{name}" target="_top">Voir le tableau de bord </a> </div>')
             ).add_to(m)
 
     map_departement_html = m._repr_html_()
@@ -67,11 +67,11 @@ def python():
         name = row.loc['nom']
         if row.geometry.geom_type == 'Polygon':
             folium.GeoJson(row.geometry, tooltip=name
-            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{name}" target="_top">Voir le tableau de bord</a> </div>')
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/REG/{name}" target="_top">Voir le tableau de bord</a> </div>')
             ).add_to(m)
         elif row.geometry.geom_type == 'MultiPolygon':
             folium.GeoJson(row.geometry, tooltip=name
-            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{name}" target="_top">Voir le tableau de bord </a> </div>')
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/REG/{name}" target="_top">Voir le tableau de bord </a> </div>')
             ).add_to(m)
 
     map_region_html = m._repr_html_()
@@ -79,10 +79,10 @@ def python():
     
     return render_template('python/python.html', map_region_html=map_region_html, map_departement_html=map_departement_html, bootstrap=bootstrap)
 
-@app.route('/python/<libelleTerritoire>')
-def territoire(libelleTerritoire: str) -> str:
-    territoire = Territoire.query.filter_by(libelleTerritoire=libelleTerritoire).first()
-    informations = InfosJob.query.filter_by(codeTerritoire=territoire.codeTerritoire, codeTypeTerritoire=territoire.codeTypeTerritoire).all()    
+@app.route('/python/<codeTypeTerritoire>/<libelleTerritoire>')
+def territoire(codeTypeTerritoire: str, libelleTerritoire: str) -> str:
+    territoire = Territoire.query.filter_by(codeTypeTerritoire=codeTypeTerritoire, libelleTerritoire=libelleTerritoire).first()
+    informations = InfosJob.query.filter_by(codeTerritoire=territoire.codeTerritoire, codeTypeTerritoire=codeTypeTerritoire).all()    
     df = pd.DataFrame.from_records([i.__dict__ for i in informations])
 
     # Visuel du territoire
