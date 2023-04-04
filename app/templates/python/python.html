@@ -30,4 +30,24 @@
         </div>
       </div>
   </div>
+  
+  {% for graph in graphs_pop %}
+    <div>{{ graph|safe }}</div>
+  {% endfor %}
+
+  {% for graph in graphs_voiture %}
+    <div>{{ graph|safe }}</div>
+  {% endfor %}
+
+  {% for graph in graphs_chauffage %}
+    <div>{{ graph|safe }}</div>
+  {% endfor %}
+
+  {% for graph in graphs_dynamisme %}
+    <div>{{ graph[0]|safe }}</div>
+    <div>
+      <p>Coefficient de corrélation : {{ graph[1] }}</p>
+    </div>
+  {% endfor %}
+
 {% endblock %}
