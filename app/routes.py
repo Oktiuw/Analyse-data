@@ -28,10 +28,13 @@ def data():
 
 @app.route('/python')
 def python():
-# Graphiques Cartes Territoires
-    # Carte pour les Départements
-    territoires = Territoire.query.filter_by(codeTypeTerritoire='DEP').all()
-    
+    return render_template('python/python.html', bootstrap=bootstrap)
+
+@app.route('/python/<codeTypeTerritoire>')
+def pythonGraphs(codeTypeTerritoire: str) -> str:
+# Carte Type Territoire
+    territoires = Territoire.query.filter_by(codeTypeTerritoire=codeTypeTerritoire).all()
+
     geoms = []
     for t in territoires:
         if t.geojson:
@@ -51,43 +54,14 @@ def python():
             ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/DEP/{name}" target="_top">Voir le tableau de bord </a> </div>')
             ).add_to(m)
 
-    map_departement_html = m._repr_html_()
-
-    # Carte pour les Régions
-    territoires = Territoire.query.filter_by(codeTypeTerritoire='REG').all()
-    
-    geoms = []
-    for t in territoires:
-        if t.geojson:
-            geoms.append(json.loads(t.geojson))
-    gdf = gpd.GeoDataFrame.from_features(geoms)
-
-    m = folium.Map(location=[46.2276, 2.2137], zoom_start=5)
-
-    for _, row in gdf.iterrows():
-        name = row.loc['nom']
-        if row.geometry.geom_type == 'Polygon':
-            folium.GeoJson(row.geometry, tooltip=name
-            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/REG/{name}" target="_top">Voir le tableau de bord</a> </div>')
-            ).add_to(m)
-        elif row.geometry.geom_type == 'MultiPolygon':
-            folium.GeoJson(row.geometry, tooltip=name
-            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/REG/{name}" target="_top">Voir le tableau de bord </a> </div>')
-            ).add_to(m)
-
-    map_region_html = m._repr_html_()
-
-
-# Graphiques Analyse France ()
+    map_html = m._repr_html_()
 
     dicoAnnee={'2015':None, '2016':None, '2017':None, '2018':None, '2019':None, '2020':None}
     informations = InfosJob.query.filter(InfosJob.codeTypeTerritoire=='REG', func.length(InfosJob.codePeriode) == 4, not_(InfosJob.codePeriode.in_(['2020','2021','2022','2023']))).all() 
     frame = pd.DataFrame.from_records([i.__dict__ for i in informations])
     colors=['rgb(129,217,255)','rgb(90,190,185)', 'rgb(0,123,255)', 'rgb(0,78,165)']
     
-  # Bilan sur les logements
-
-    # Population
+# Population France ()
     graphs_pop = []
     dico=dicoAnnee.copy()
     for index,element in frame.iterrows():
@@ -103,6 +77,18 @@ def python():
     graphs_pop.append(fig.to_html(full_html=False))
     fig.update_layout(yaxis_range=[66000000,67000000])  
     graphs_pop.append(fig.to_html(full_html=False))
+
+    return render_template('python/pythonTypeTerritoire.html', map_html=map_html, graphs_pop=graphs_pop, bootstrap=bootstrap)
+
+@app.route('/python/bilan')
+def pythonBilan() -> str:
+# Graphiques Analyse France ()
+    dicoAnnee={'2015':None, '2016':None, '2017':None, '2018':None, '2019':None, '2020':None}
+    informations = InfosJob.query.filter(InfosJob.codeTypeTerritoire=='REG', func.length(InfosJob.codePeriode) == 4, not_(InfosJob.codePeriode.in_(['2020','2021','2022','2023']))).all() 
+    frame = pd.DataFrame.from_records([i.__dict__ for i in informations])
+    colors=['rgb(129,217,255)','rgb(90,190,185)', 'rgb(0,123,255)', 'rgb(0,78,165)']
+    
+    # Bilan sur les logements
 
     # Voiture logements
     graphs_voiture = []
@@ -177,7 +163,16 @@ def python():
             fig=px.pie(values=dico[year],names=names,title=f"Année {year}", color_discrete_sequence=colors)
             graphs_chauffage.append(fig.to_html(full_html=False))
 
-  # Recherche d'un lien avec le dynamisme d'un territoire
+    return render_template('python/pythonBilan.html', graphs_chauffage=graphs_chauffage, graphs_voiture=graphs_voiture, bootstrap=bootstrap)
+
+@app.route('/python/lien')
+def pythonLien() -> str:
+# Graphiques Analyse lien France ()
+    informations = InfosJob.query.filter(InfosJob.codeTypeTerritoire=='REG', func.length(InfosJob.codePeriode) == 4, not_(InfosJob.codePeriode.in_(['2020','2021','2022','2023']))).all() 
+    frame = pd.DataFrame.from_records([i.__dict__ for i in informations])
+    colors=['rgb(129,217,255)','rgb(90,190,185)', 'rgb(0,123,255)', 'rgb(0,78,165)']
+
+    # Recherche d'un lien avec le dynamisme d'un territoire
     graphs_dynamisme = []
     df=frame.query('codePeriode=="2019"')
     champs=['nbLogements0VOIT','nbLogements1VOIT','nbLogements2VOIT','nbLogements3VOITOuPlus','population','nbLogementsAvecPlacesResa','chauffageCollectif','chauffageIndiv','chauffageElect','chauffageAutre']
@@ -188,7 +183,8 @@ def python():
         graphs_dynamisme.append((fig.to_html(full_html=False),df[champ].corr(df['valeurIndic']))) #(Graph, Coefficient de corrélation )
         i+=1
 
-    return render_template('python/python.html', map_region_html=map_region_html, graphs_dynamisme=graphs_dynamisme, graphs_chauffage=graphs_chauffage, graphs_voiture=graphs_voiture ,graphs_pop=graphs_pop, map_departement_html=map_departement_html, bootstrap=bootstrap)
+    return render_template('python/pythonLien.html', graphs_dynamisme=graphs_dynamisme, bootstrap=bootstrap)  
+    
 
 @app.route('/python/<codeTypeTerritoire>/<libelleTerritoire>')
 def territoire(codeTypeTerritoire: str, libelleTerritoire: str) -> str:
