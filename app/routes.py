@@ -47,11 +47,11 @@ def pythonGraphs(codeTypeTerritoire: str) -> str:
         name = row.loc['nom']
         if row.geometry.geom_type == 'Polygon':
             folium.GeoJson(row.geometry, tooltip=name
-            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/DEP/{name}" target="_top">Voir le tableau de bord</a> </div>')
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{codeTypeTerritoire}/{name}" target="_top">Voir le tableau de bord</a> </div>')
             ).add_to(m)
         elif row.geometry.geom_type == 'MultiPolygon':
             folium.GeoJson(row.geometry, tooltip=name
-            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/DEP/{name}" target="_top">Voir le tableau de bord </a> </div>')
+            ).add_child(folium.Popup(f'<div style="width: 140px; text-align: center;"> {name} <br> <a href="/python/{codeTypeTerritoire}/{name}" target="_top">Voir le tableau de bord </a> </div>')
             ).add_to(m)
 
     map_html = m._repr_html_()
@@ -170,7 +170,6 @@ def pythonLien() -> str:
 # Graphiques Analyse lien France ()
     informations = InfosJob.query.filter(InfosJob.codeTypeTerritoire=='REG', func.length(InfosJob.codePeriode) == 4, not_(InfosJob.codePeriode.in_(['2020','2021','2022','2023']))).all() 
     frame = pd.DataFrame.from_records([i.__dict__ for i in informations])
-    colors=['rgb(129,217,255)','rgb(90,190,185)', 'rgb(0,123,255)', 'rgb(0,78,165)']
 
     # Recherche d'un lien avec le dynamisme d'un territoire
     graphs_dynamisme = []
@@ -191,6 +190,7 @@ def territoire(codeTypeTerritoire: str, libelleTerritoire: str) -> str:
     territoire = Territoire.query.filter_by(codeTypeTerritoire=codeTypeTerritoire, libelleTerritoire=libelleTerritoire).first()
     informations = InfosJob.query.filter_by(codeTerritoire=territoire.codeTerritoire, codeTypeTerritoire=codeTypeTerritoire).all()    
     df = pd.DataFrame.from_records([i.__dict__ for i in informations])
+    colors=['rgb(129,217,255)','rgb(90,190,185)', 'rgb(0,123,255)', 'rgb(0,78,165)']
 
     # Visuel du territoire
     if territoire.geojson:
@@ -220,17 +220,17 @@ def territoire(codeTypeTerritoire: str, libelleTerritoire: str) -> str:
         #concernant le nombre de voitures
         lst_voiture = df_base[['nbLogements0VOIT', 'nbLogements1VOIT', 'nbLogements2VOIT'  ,'nbLogements3VOITOuPlus']].iloc[0].to_list()
         df_voitures = pd.DataFrame({'Logement': ['sans voiture', 'avec 1 voiture', 'avec 2 voitures', 'avec 3 voitures ou plus'], annee : lst_voiture})
-        fig = px.pie(df_voitures, values=annee, names='Logement', title=f"Proportion de voitures par logement - Année {annee}")
+        fig = px.pie(df_voitures, values=annee, names='Logement', title=f"Proportion de voitures par logement - Année {annee}", color_discrete_sequence=colors)
         graphs.append(fig.to_html(full_html=True))
         #concernant les places de parking
         lst_place = df_base[['nbLogementsAvecPlacesResa']].iloc[0].to_list()[0]
-        df_places = pd.DataFrame({'Logement': ['avec places réservées', 'sans places réservées'], annee : [lst_place, sum(lst_voiture)-lst_place]})
-        fig = px.pie(df_places, values=annee, names='Logement', title=f"Proportion de place de parking reservées - Année {annee}")
+        df_places = pd.DataFrame({'Logement': ['avec place réservée', 'sans place réservée'], annee : [lst_place, sum(lst_voiture)-lst_place]})
+        fig = px.pie(df_places, values=annee, names='Logement', title=f"Proportion de place de parking reservée - Année {annee}", color_discrete_sequence=[colors[0], colors[2]])
         graphs.append(fig.to_html(full_html=True))
         #concernant le chauffage
         lst_chauffage = df_base[['chauffageCollectif', 'chauffageIndiv', 'chauffageElect', 'chauffageAutre']].iloc[0].to_list()
         df_chauffage = pd.DataFrame({'Logement': ['avec chauffage collectif','avec chauffage individuel', 'avec chauffage electrique', 'avec autre chauffage',], annee : lst_chauffage})
-        fig = px.pie(df_chauffage, values=annee, names='Logement', title=f"Proportion des différents type de chauffage - Année {annee}")
+        fig = px.pie(df_chauffage, values=annee, names='Logement', title=f"Proportion des différents type de chauffage - Année {annee}", color_discrete_sequence=colors)
         graphs.append(fig.to_html(full_html=True))
     
 

@@ -1,4 +1,13 @@
+h1{
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
 div.map{
   max-width: 20%;
+}
+
+ul.nav{
   align-self: center;
 }

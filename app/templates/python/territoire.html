@@ -10,19 +10,64 @@
 {% endblock %}
 
 {% block content %}
+
   <h1>Tableau de bord {{ territoire.libelleTerritoire }} </h1>
 
   <div class="row">
-    <div id="map" class="col-4">{{ map_html|safe }}</div>
+    <div type="button" class="btn btn-primary col-md-4" onclick="history.back()">Retour à la carte</div>
+  </div>
 
+  <div class="row">
+    <div id="map" class="col-4">{{ map_html|safe }}</div>
     <div id="plot" class="col-8">{{ graph_valeurIndic|safe }}</div>
   </div>
 
+  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="pills-2019-tab" data-toggle="pill" href="#pills-2019" role="tab" aria-controls="pills-2019" aria-selected="true">2019</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-2018-tab" data-toggle="pill" href="#pills-2018" role="tab" aria-controls="pills-2018" aria-selected="false">2018</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-2017-tab" data-toggle="pill" href="#pills-2017" role="tab" aria-controls="pills-2017" aria-selected="false">2017</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-2016-tab" data-toggle="pill" href="#pills-2016" role="tab" aria-controls="pills-2016" aria-selected="false">2016</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-2019" role="tabpanel" aria-labelledby="pills-2019-tab">
+      <div class="row">
+        <div class="col-md-4">{{ graphs[9]|safe }}</div>
+        <div class="col-md-4">{{ graphs[10]|safe }}</div>
+        <div class="col-md-4">{{ graphs[11]|safe }}</div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="pills-2018" role="tabpanel" aria-labelledby="pills-2018-tab">
+      <div class="row">
+        <div class="col-md-4">{{ graphs[6]|safe }}</div>
+        <div class="col-md-4">{{ graphs[7]|safe }}</div>
+        <div class="col-md-4">{{ graphs[8]|safe }}</div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="pills-2017" role="tabpanel" aria-labelledby="pills-2017-tab">
+      <div class="row">
+        <div class="col-md-4">{{ graphs[3]|safe }}</div>
+        <div class="col-md-4">{{ graphs[4]|safe }}</div>
+        <div class="col-md-4">{{ graphs[5]|safe }}</div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="pills-2016" role="tabpanel" aria-labelledby="pills-2016-tab">
+      <div class="row">
+        <div class="col-md-4">{{ graphs[0]|safe }}</div>
+        <div class="col-md-4">{{ graphs[1]|safe }}</div>
+        <div class="col-md-4">{{ graphs[2]|safe }}</div>
+      </div>
+    </div>
+  </div>
 
-  {% for graph in graphs %}
-    <div id="plot">{{ graph|safe }}</div>
-  {% endfor %}
-
+<!--
   <table class="table">
     <thead>
       <tr>
@@ -59,6 +104,6 @@
       {% endfor %}
     </tbody>
   </table>
-
+-->
  
 {% endblock %}
