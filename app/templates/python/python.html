@@ -10,44 +10,27 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Visualisation Python</h1>
-
-    <div class="">
-      <ul class="nav nav-pills mb-3 container row justify-content-md-center" id="pills-tab" role="tablist">
+  <h1>Visualisation Python</h1>
+  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto visualisations">
         <li class="nav-item">
-          <a class="nav-link active " id="pills-departement-tab" data-toggle="pill" href="#pills-departement" role="tab" aria-controls="pills-departement" aria-selected="true">Départements</a>
+          <a class="nav-link" href="/python/DEP">Départements</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="pills-region-tab" data-toggle="pill" href="#pills-region" role="tab" aria-controls="pills-region" aria-selected="false">Régions</a>
+          <a class="nav-link" href="/python/REG">Régions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/python/bilan">Bilan sur les logements</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/python/lien">Recherche d'un lien avec le dynamisme d'un territoire</a>
         </li>
       </ul>
-      <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-departement" role="tabpanel" aria-labelledby="pills-departement-tab">
-          <div id="plot" class="map">{{ map_departement_html|safe }}</div>
-        </div>
-        <div class="tab-pane fade" id="pills-region" role="tabpanel" aria-labelledby="pills-region-tab">
-          <div id="plot" class="map">{{ map_region_html|safe }}</div>
-        </div>
-      </div>
-  </div>
-  
-  {% for graph in graphs_pop %}
-    <div>{{ graph|safe }}</div>
-  {% endfor %}
-
-  {% for graph in graphs_voiture %}
-    <div>{{ graph|safe }}</div>
-  {% endfor %}
-
-  {% for graph in graphs_chauffage %}
-    <div>{{ graph|safe }}</div>
-  {% endfor %}
-
-  {% for graph in graphs_dynamisme %}
-    <div>{{ graph[0]|safe }}</div>
-    <div>
-      <p>Coefficient de corrélation : {{ graph[1] }}</p>
     </div>
-  {% endfor %}
+  </nav>
+
+  {% block visualisation %}{% endblock %}  
 
 {% endblock %}

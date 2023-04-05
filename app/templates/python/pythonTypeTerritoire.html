@@ -1,0 +1,21 @@
+<!-- app/templates/python/pythonTypeTerritoire.html -->
+{% extends "python/python.html" %}
+
+{% block visualisation %}
+
+  <div id="plot" class="map">{{ map_html|safe }}</div>
+
+  <br class="sep">
+
+  <div class="row m-3">
+    <div class="col-md-6">
+      <p> La croissance de la population française stagne : </p>
+      <div>{{ graphs_pop[0]|safe }}</div>
+    </div>
+    <div class="col-md-6">
+      <p>Fait intéréssant, si on manipule l'échelle sur la gauche, on pourrait croire que la france dispose d'une croissance exponentielle :</p>
+      <div>{{ graphs_pop[1]|safe }}</div>
+    </div>
+  </div>
+
+{% endblock %}

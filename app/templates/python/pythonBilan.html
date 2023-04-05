@@ -1,0 +1,43 @@
+<!-- app/templates/python/pythonBilan.html -->
+{% extends "python/python.html" %}
+
+{% block visualisation %}
+
+  <h2 class="m-4">Analyse du nombre de voitures par logement :</h2>
+
+  {{ graphs_voiture[0]|safe }}
+
+  <p class="m-3">Cette visualisation en histogrammes empilés n'est pas très représentative. <br>
+    En effet la population augmente ainsi que le nombre de logements, il faut donc voir la répartition de ceux-ci:</p>
+
+  <div class="row">
+    {% for i in range(graphs_voiture|length) %}
+      {% if i != 0 %}
+        <div class="col-md-6">{{ graphs_voiture[i]|safe }}</div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <p class="m-3">(On remarque une baisse des logements avec 2 voitures. On peut suppposer que cette baisse est la conséquence de l'augmentation du nombre de divorces en France.)</p>
+
+
+  <hr>
+  <h2 class="m-4">Analyse du type de chauffage par logement :</h2>
+
+  {{ graphs_chauffage[0]|safe }}
+
+  <p class="m-3">Même constat lors de l'analyse précédente, il faut voir la répartition. <br>
+    En effet, le nombre de chauffage augmente à mesure que le nombre de logements augmente.</p>
+
+  <div class="row">
+    {% for i in range(graphs_chauffage|length) %}
+      {% if i != 0 %}
+        <div class="col-md-6">{{ graphs_chauffage[i]|safe }}</div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <p class="m-3">Au fils des années, on remarque que les logements à chauffage électrique sont en hausse alors que ceux au fioul ou au gaz sont en baisse, même si ils restent majoritaire. <br>
+    Ceci montre bien la politique gouvernementale actuelle. </p>
+
+{% endblock %}

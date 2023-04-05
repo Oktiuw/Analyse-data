@@ -1,0 +1,30 @@
+<!-- app/templates/python/pythonLien.html -->
+{% extends "python/python.html" %}
+
+{% block visualisation %}
+
+  <h2 class="m-4">Recherche d'un lien avec le dynamisme d'un territoire :</h2>
+
+  <p class="m-3">Rappelons la définition d'un coefficient de corrélation : <br>
+    &nbsp;&nbsp;&nbsp;Ci celui ci s'approche de 1, cela montre un lien positif entre une variable et une autre. <br>
+    &nbsp;&nbsp;&nbsp;Au contraire, s'il s'approche de -1, cela montre un lien négatif. <br>
+    &nbsp;&nbsp;&nbsp;Finalement, s'il se rapproche de 0, cela montre l'absence de lien.</p>
+
+  <p class="m-3">Nous allons maintenant visualiser cette corrélation à l'aide de graphiques en nuage de points et calculer tous les coefficients <a href="#graphs">(ci-dessous).</a></p>
+
+  <p class="m-3">On observe 2 coefficients de corrélations valant environ -0,6. C'est trop peu pour établir un lien, mais en regardant les variables concernées, nombre de logements à 2 voitures et nombre de logements à 3 voiture ou plus, nous pouvons déduire une tendance. 
+    Plus les logements d'un territoire ont plusieurs voitures, moins ce territoire sera dynamique. 
+    Cela fait sens, les territoires ayant le plus de logements avec plusieurs voitures sont les territoires où la densité de population est plus faible, et donc, avec moins de villes et de moins grandes tailles.<br>
+    En effet, si on regarde les 2 graphiques concernés, on voit que 2 fois, une région dispose du plus grand nombre de logements à 2 et 3 voitures ou plus. Il s'agit de la région Auvergne-Rhône-Alpes. On sait que cette région, à part quelques grandes villes comme Lyon ou Clermont-Ferrand, est surtout constituée de villages.</p>
+
+  <div id="graphs"></div><hr class="mt-5"> 
+
+  {% for graph in graphs_dynamisme %}
+    <div>{{ graph[0]|safe }}</div>
+    <div>
+      <p class="coeff">Coefficient de corrélation : {{ graph[1] }}</p>
+    </div>
+    <hr>
+  {% endfor %}
+
+{% endblock %}
