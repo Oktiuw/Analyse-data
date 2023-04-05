@@ -1,10 +1,20 @@
 <!-- app/templates/powerBI/powerBI.html -->
 {% extends "base.html" %}
 
+{% block script %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/powerBI.css') }}">
+{% endblock %}
+
 {% block title %}
     Visualisation Power BI
 {% endblock %}
 
 {% block content %}
     <h1>Visualisation Power BI</h1>
+
+    <a class="download" href="{{ url_for('static', filename='powerBI/SAE_Data_PowerBi.pbix') }}" download="SAE_DATA_PowerBI.pbix">Télécharger le fichier PowerBI</a>
+
+    <div class="pdf">
+        <embed src="{{ url_for('static', filename='powerBI/SAE_Data_PowerBi.pdf') }}" type="application/pdf">
+    </div>
 {% endblock %}

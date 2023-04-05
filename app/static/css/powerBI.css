@@ -1,0 +1,22 @@
+h1{
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+a.download{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+div.pdf {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+embed{
+  height: 750px;
+  width: 90%;
+}
