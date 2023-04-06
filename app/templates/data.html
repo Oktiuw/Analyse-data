@@ -41,6 +41,11 @@
             </a></li>
             <li class="list-group-item collapse" id="stockage">
                 <p>Les données sont stockées sur une machine virtuelle : <a href="http://10.31.5.227/phpmyadmin/" target="_blank">10.31.11.229</a>.<br> Si vous souhaitez un compte phpmyadmin pour visualiser les données, envoyez un mail à <a href="mailto:aurelien.vincent@etudiant.univ-reims.fr">aurelien.vincent@etudiant.univ-reims.fr</a> </p>
+                <p>Voici un aperçu du modèle conceptuel des données : 
+                    <div class="pdf">
+                        <embed src="{{ url_for('static', filename='img/MCD.pdf') }}" type="application/pdf">
+                    </div>
+                </p>
                 <p>Sinon, vous pouvez voir les données <a href="#territoires">ici</a>.</p>
             </li>
         </ul>

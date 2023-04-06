@@ -25,3 +25,11 @@ thead{
   background-color: #f3f3f3;
 }
 
+div.pdf {
+  display: flex;
+}
+
+embed{
+  height: 600px;
+  width: 70%;
+}
